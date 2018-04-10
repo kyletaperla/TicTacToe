@@ -1,8 +1,12 @@
+// DECLARE GLOBAL VARIABLES
+
 var myGame = null;
 var rowId = "";
 var cellID = "";
 var win = false;
 var running = true;
+
+// DECLARE Objects to define TicTacToe board rows and cells
 
 TicTacToe = function(target){
     this.board = new Board();
@@ -21,6 +25,8 @@ BoardRow = function(){
     this.cell2 = "";
     this.cell3 = "";
 }
+
+// Prototype function attached to TicTacToe object to check if a win condition has been met.
 
 TicTacToe.prototype.CheckWin = function(){
     if(myGame.turn === 'player1') {
