@@ -1,0 +1,22 @@
+.TicTacToe-container {
+    width: 500px ;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    
+  }
+  
+.col-lg-4 {
+    padding: 2;
+    border: 1px solid black;
+    height: 8rem;
+    width: 100%;
+}
+
+.tictac {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 7rem;
+    font-size: 70px;
+}
