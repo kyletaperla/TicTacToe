@@ -118,7 +118,7 @@ TicTacToe.prototype.CheckWin = function(){
  
     if(win === false) {
         if(this.board.row1.cell1 != "" && this.board.row1.cell2 != "" && this.board.row1.cell3 != "" 
-        && this.board.row2.cell1 != "" && this.board.row2.cell2 != "" && this.board.row2.cell2 != "" &&
+        && this.board.row2.cell1 != "" && this.board.row2.cell2 != "" && this.board.row2.cell3 != "" &&
         this.board.row3.cell1 != "" && this.board.row3.cell2 != "" && this.board.row3.cell3 != "" ) {
             document.getElementById("titlehead").innerHTML = "IT'S A TIE!";
             document.getElementById("player-turn").innerHTML = "";
