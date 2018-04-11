@@ -166,10 +166,32 @@ TicTacToe.prototype.Render = function(){
 
 $(document).ready(function(){
     $('div.tictac').click(ButtonPress);
+    $('.reset').click(Reset);
 
     myGame = new TicTacToe(".TicTacToe-container");
 
 });
+
+function Reset() {
+    myGame.board.row1.cell1 = "";
+    myGame.board.row1.cell2 = "";
+    myGame.board.row1.cell3 = "";
+    myGame.board.row2.cell1 = "";
+    myGame.board.row2.cell2 = "";
+    myGame.board.row2.cell3 = "";
+    myGame.board.row3.cell1 = "";
+    myGame.board.row3.cell2 = "";
+    myGame.board.row3.cell3 = "";
+
+    rowId = "";
+    cellID = "";
+    win = false;
+    running = true;
+    changePlayer = false;
+
+    myGame.Render();
+    
+}
 
 function ButtonPress(e){
     if(!win && running) {
