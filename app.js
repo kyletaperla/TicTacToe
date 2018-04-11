@@ -182,7 +182,8 @@ function Reset() {
     myGame.board.row3.cell1 = "";
     myGame.board.row3.cell2 = "";
     myGame.board.row3.cell3 = "";
-
+    
+    myGame.turn = "player1";
     rowId = "";
     cellID = "";
     win = false;
