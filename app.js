@@ -6,6 +6,7 @@ var cellID = "";
 var win = false;
 var running = true;
 var changePlayer = false;
+var reset = false;
 
 // DECLARE Objects to define TicTacToe board rows and cells
 
@@ -161,7 +162,8 @@ TicTacToe.prototype.Render = function(){
     $(row3).find("[data-cell=2]").text(this.board.row3.cell2);
     $(row3).find("[data-cell=3]").text(this.board.row3.cell3);
 
-    myGame.CheckWin();
+    if(!reset)
+        myGame.CheckWin();
 }
 
 $(document).ready(function(){
@@ -183,14 +185,19 @@ function Reset() {
     myGame.board.row3.cell2 = "";
     myGame.board.row3.cell3 = "";
     
-    myGame.turn = "player1";
     rowId = "";
     cellID = "";
     win = false;
     running = true;
-    changePlayer = false;
+    reset = true;
 
     myGame.Render();
+
+    myGame.turn = 'player1';
+    document.getElementById("player-turn").innerHTML = "Player 1's Turn";
+    changePlayer = false;
+
+    reset = false;
     
 }
 
