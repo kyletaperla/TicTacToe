@@ -5,6 +5,7 @@ var rowId = "";
 var cellID = "";
 var win = false;
 var running = true;
+var changePlayer = false;
 
 // DECLARE Objects to define TicTacToe board rows and cells
 
@@ -126,15 +127,19 @@ TicTacToe.prototype.CheckWin = function(){
         running = false;
         }  
  
-        if(running === true) {
-            if(myGame.turn === 'player1') {
-                myGame.turn = 'player2';
-                document.getElementById("player-turn").innerHTML = "Player 2's Turn";
-            } 
-            else {
-                myGame.turn = 'player1';
-                document.getElementById("player-turn").innerHTML = "Player 1's Turn";
-            }
+        if(running) {
+            if(changePlayer) {
+                if(myGame.turn === 'player1') {
+                    myGame.turn = 'player2';
+                    document.getElementById("player-turn").innerHTML = "Player 2's Turn";
+                    changePlayer = false;
+                } 
+                else {
+                    myGame.turn = 'player1';
+                    document.getElementById("player-turn").innerHTML = "Player 1's Turn";
+                    changePlayer = false;
+                }
+            }        
         }
     }
 }
@@ -209,51 +214,60 @@ function UpdateBoard(targetCell) {
             case "1":
                 if(myGame.board.row1.cell1 === "") {
                     myGame.board.row1.cell1 = 'x';
+                    changePlayer = true;
                 }
             break;
-        case "2":
-            if(myGame.board.row1.cell2 === "") {
-                myGame.board.row1.cell2 = 'x';
-            }
+            case "2":
+                if(myGame.board.row1.cell2 === "") {
+                    myGame.board.row1.cell2 = 'x';
+                    changePlayer = true;
+                }
+                break;
+            case "3":
+                if(myGame.board.row1.cell3 === "") {
+                    myGame.board.row1.cell3 = 'x';
+                    changePlayer = true;
+                }
+                break;
+            case "4":
+                if(myGame.board.row2.cell1 === "") {
+                    myGame.board.row2.cell1 = 'x';
+                    changePlayer = true;
+                }
+                break;
+            case "5":
+                if(myGame.board.row2.cell2 === "") {
+                    myGame.board.row2.cell2 = 'x';
+                    changePlayer = true;
+                }
+                break;
+            case "6":
+                if(myGame.board.row2.cell3 === "") {
+                    myGame.board.row2.cell3 = 'x';
+                    changePlayer = true;
+                }
+                break;
+            case "7":
+                if(myGame.board.row3.cell1 === "") {
+                    myGame.board.row3.cell1 = 'x';
+                    changePlayer = true;
+                } 
+                break;
+            case "8":
+                if(myGame.board.row3.cell2 === "") {
+                    myGame.board.row3.cell2 = 'x';
+                    changePlayer = true;
+                } 
             break;
-        case "3":
-            if(myGame.board.row1.cell3 === "") {
-                myGame.board.row1.cell3 = 'x';
-            }
-            break;
-        case "4":
-            if(myGame.board.row2.cell1 === "") {
-                myGame.board.row2.cell1 = 'x';
-            }
-            break;
-        case "5":
-            if(myGame.board.row2.cell2 === "") {
-                myGame.board.row2.cell2 = 'x';
-            }
-            break;
-        case "6":
-            if(myGame.board.row2.cell3 === "") {
-                myGame.board.row2.cell3 = 'x';
-            }
-            break;
-        case "7":
-            if(myGame.board.row3.cell1 === "") {
-                myGame.board.row3.cell1 = 'x';
-            } 
-            break;
-        case "8":
-            if(myGame.board.row3.cell2 === "") {
-                myGame.board.row3.cell2 = 'x';
-            } 
-        break;
-        case "9":
-            if(myGame.board.row3.cell3 === "") {
-                myGame.board.row3.cell3 = 'x';
-            } 
-        break; 
-        default:
-            console.log("Not applicable.");
-            break;
+            case "9":
+                if(myGame.board.row3.cell3 === "") {
+                    myGame.board.row3.cell3 = 'x';
+                    changePlayer = true;
+                } 
+            break; 
+            default:
+                console.log("Not applicable.");
+                break;
         }
         
     } 
@@ -262,51 +276,60 @@ function UpdateBoard(targetCell) {
             case "1":
                 if(myGame.board.row1.cell1 === "") {
                     myGame.board.row1.cell1 = 'o';
+                    changePlayer = true;
                 }
                 break;
-            case "2":
-                if(myGame.board.row1.cell2 === "") {
-                myGame.board.row1.cell2 = 'o'; 
-            }
-                break;
-            case "3":
-                if(myGame.board.row1.cell3 === "") {
-                myGame.board.row1.cell3 = 'o';
+                case "2":
+                    if(myGame.board.row1.cell2 === "") {
+                    myGame.board.row1.cell2 = 'o'; 
+                    changePlayer = true;
                 }
-                break;
-            case "4":
-                if(myGame.board.row2.cell1 === "") {
-                myGame.board.row2.cell1 = 'o';
-            }
-                break;
-            case "5":
-                if(myGame.board.row2.cell2 === "") {
-                myGame.board.row2.cell2 = 'o';
+                    break;
+                case "3":
+                    if(myGame.board.row1.cell3 === "") {
+                    myGame.board.row1.cell3 = 'o';
+                    changePlayer = true;
+                    }
+                    break;
+                case "4":
+                    if(myGame.board.row2.cell1 === "") {
+                    myGame.board.row2.cell1 = 'o';
+                    changePlayer = true;
                 }
-                break;
-            case "6":
-                if(myGame.board.row2.cell3 === "") {
-                    myGame.board.row2.cell3 = 'o';
-                }
-                break;
-            case "7":
-                if(myGame.board.row3.cell1 === "") {
-                    myGame.board.row3.cell1 = 'o';
-                } 
-                break;
-            case "8":
-                if(myGame.board.row3.cell2 === "") {
-                    myGame.board.row3.cell2 = 'o';
-                } 
-                break;
-            case "9":
-                if(myGame.board.row3.cell3 === "") {
-                myGame.board.row3.cell3 = 'o';
-                } 
-                break; 
-            default:
-                console.log("Not applicable.");
-                break;
+                    break;
+                case "5":
+                    if(myGame.board.row2.cell2 === "") {
+                    myGame.board.row2.cell2 = 'o';
+                    changePlayer = true;
+                    }
+                    break;
+                case "6":
+                    if(myGame.board.row2.cell3 === "") {
+                        myGame.board.row2.cell3 = 'o';
+                        changePlayer = true;
+                    }
+                    break;
+                case "7":
+                    if(myGame.board.row3.cell1 === "") {
+                        myGame.board.row3.cell1 = 'o';
+                        changePlayer = true;
+                    } 
+                    break;
+                case "8":
+                    if(myGame.board.row3.cell2 === "") {
+                        myGame.board.row3.cell2 = 'o';
+                        changePlayer = true;
+                    } 
+                    break;
+                case "9":
+                    if(myGame.board.row3.cell3 === "") {
+                    myGame.board.row3.cell3 = 'o';
+                    changePlayer = true;
+                    } 
+                    break; 
+                default:
+                    console.log("Not applicable.");
+                    break;
         }
     }
     myGame.Render();
