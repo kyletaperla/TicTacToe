@@ -1,366 +1,181 @@
-// DECLARE GLOBAL VARIABLES
-
-var myGame = null;
-var rowId = "";
-var cellID = "";
-var win = false;
-var running = true;
-var changePlayer = false;
-var reset = false;
-
-// DECLARE Objects to define TicTacToe board rows and cells
-
 TicTacToe = function(target){
-    this.board = new Board();
-    this.turn = "player1";
+    this.board = [["","",""],["","",""],["","",""]];
+    this.turn = "x";
     this.target = target;
+    this.win = false;
+    this.tie = false;
+    this.running = true;
+    this.changePlayer = false;
+    this.reset = false;
+    this.txt = null;
+    this.name = "Kyle's Tic Tac Toe";
+    let me = this;
+    this.getGameDom().addEventListener("click", (e) => {
+        me.buttonPress.call(me, e);
+    });
+    this.render();
 }
 
-Board = function(){
-    this.row1 = new BoardRow();
-    this.row2 = new BoardRow();
-    this.row3 = new BoardRow();
+TicTacToe.prototype.getGameDom = function(){
+    return document.querySelector(this.target);
 }
 
-BoardRow = function(){
-    this.cell1 = "";
-    this.cell2 = "";
-    this.cell3 = "";
-}
+TicTacToe.prototype.render = function(){
+    let win = this.win;
+    let tie = this.tie;
+    let game = this.getGameDom();
+    if(!game) { return; }
 
-// Prototype function attached to TicTacToe object to check if a win condition has been met.
-
-TicTacToe.prototype.CheckWin = function(){
-    if(myGame.turn === 'player1') {
-
-        if(this.board.row1.cell1 === 'x' && this.board.row1.cell2 == 'x' && this.board.row1.cell3 == 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row2.cell1 === 'x' && this.board.row2.cell2 === 'x' && this.board.row2.cell3 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row3.cell1 === 'x' && this.board.row3.cell2 === 'x' && this.board.row3.cell3 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell1 === 'x' && this.board.row2.cell1 === 'x' && this.board.row3.cell1 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell2 === 'x' && this.board.row2.cell2 === 'x' && this.board.row3.cell2 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell3 === 'x' && this.board.row2.cell3 === 'x' && this.board.row3.cell3 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell1 === 'x' && this.board.row2.cell2 === 'x' && this.board.row3.cell3 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell3 === 'x' && this.board.row2.cell2 === 'x' && this.board.row3.cell1 === 'x') {
-            document.getElementById("titlehead").innerHTML = "Player 1 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-
-    } 
-    else {
-        if(this.board.row1.cell1 === 'o' && this.board.row1.cell2 == 'o' && this.board.row1.cell3 == 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row2.cell1 === 'o' && this.board.row2.cell2 === 'o' && this.board.row2.cell3 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row3.cell1 === 'o' && this.board.row3.cell2 === 'o' && this.board.row3.cell3 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell1 === 'o' && this.board.row2.cell1 === 'o' && this.board.row3.cell1 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell2 === 'o' && this.board.row2.cell2 === 'o' && this.board.row3.cell2 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell3 === 'o' && this.board.row2.cell3 === 'o' && this.board.row3.cell3 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell1 === 'o' && this.board.row2.cell2 === 'o' && this.board.row3.cell3 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-        else if (this.board.row1.cell3 === 'o' && this.board.row2.cell2 === 'o' && this.board.row3.cell1 === 'o') {
-            document.getElementById("titlehead").innerHTML = "Player 2 wins";
-            document.getElementById("player-turn").innerHTML = "";
-            win = true;
-        }
-    }
- 
-    if(win === false) {
-        if(this.board.row1.cell1 != "" && this.board.row1.cell2 != "" && this.board.row1.cell3 != "" 
-        && this.board.row2.cell1 != "" && this.board.row2.cell2 != "" && this.board.row2.cell3 != "" &&
-        this.board.row3.cell1 != "" && this.board.row3.cell2 != "" && this.board.row3.cell3 != "" ) {
-            document.getElementById("titlehead").innerHTML = "IT'S A TIE!";
-            document.getElementById("player-turn").innerHTML = "";
- 
-        running = false;
-        }  
- 
-        if(running) {
-            if(changePlayer) {
-                if(myGame.turn === 'player1') {
-                    myGame.turn = 'player2';
-                    document.getElementById("player-turn").innerHTML = "Player 2's Turn";
-                    changePlayer = false;
-                } 
-                else {
-                    myGame.turn = 'player1';
-                    document.getElementById("player-turn").innerHTML = "Player 1's Turn";
-                    changePlayer = false;
-                }
-            }        
-        }
-    }
-}
-
-TicTacToe.prototype.Render = function(){
-    let row1 = $(this.target).find("[data-row=1]");
-    let row2 = $(this.target).find("[data-row=2]");
-    let row3 = $(this.target).find("[data-row=3]");
-
-    $(row1).find("[data-cell=1]").text(this.board.row1.cell1);
-    $(row1).find("[data-cell=2]").text(this.board.row1.cell2);
-    $(row1).find("[data-cell=3]").text(this.board.row1.cell3);
-
-    $(row2).find("[data-cell=1]").text(this.board.row2.cell1);
-    $(row2).find("[data-cell=2]").text(this.board.row2.cell2);
-    $(row2).find("[data-cell=3]").text(this.board.row2.cell3);
-
-    $(row3).find("[data-cell=1]").text(this.board.row3.cell1);
-    $(row3).find("[data-cell=2]").text(this.board.row3.cell2);
-    $(row3).find("[data-cell=3]").text(this.board.row3.cell3);
-
-    if(!reset)
-        myGame.CheckWin();
-}
-
-$(document).ready(function(){
-    $('div.tictac').click(ButtonPress);
-    $('.reset').click(Reset);
-
-    myGame = new TicTacToe(".TicTacToe-container");
-
-});
-
-function Reset() {
-    myGame.board.row1.cell1 = "";
-    myGame.board.row1.cell2 = "";
-    myGame.board.row1.cell3 = "";
-    myGame.board.row2.cell1 = "";
-    myGame.board.row2.cell2 = "";
-    myGame.board.row2.cell3 = "";
-    myGame.board.row3.cell1 = "";
-    myGame.board.row3.cell2 = "";
-    myGame.board.row3.cell3 = "";
+    if(!win && !tie) {
+        game.innerHTML = "";
+        let newHtml = "";
+        newHtml += "<h1 align='center' id='titlehead'>" + this.name + "</h1>";
+        newHtml += "<h2 id='player-turn' align='center'>Turn: " + this.turn + "</h2>";
     
-    rowId = "";
-    cellID = "";
-    win = false;
-    running = true;
-    reset = true;
-
-    myGame.Render();
-
-    myGame.turn = 'player1';
-    document.getElementById("player-turn").innerHTML = "Player 1's Turn";
-    changePlayer = false;
-
-    reset = false;
     
+        for(let i = 1;i <= 3; i++) {
+            
+            newHtml += "<div class='row'>"
+    
+            for(let k = 1; k <= 3; k++) {
+                newHtml +=  "<div class='col-4 tictac' data-row='" + i + "'data-cell='" + k + "' align='center'>" + this.board[i-1][k-1]  + "</div>";      
+            }
+    
+           newHtml += "</div>"
+        }
+    
+        newHtml += "<div class='row'><button class='col-12 reset'>reset</button></div>"
+    
+        game.innerHTML = newHtml;
+    } else if (tie) {
+        game.innerHTML = "";
+        let newHtml = "";
+        newHtml += "<h1 align='center' id='titlehead'>It's a tie!</h1>";
+        newHtml += "<h2 id='player-turn' align='center'>Try again!</h2>";
+        newHtml += "<div class='row'><button class='col-12 reset'>reset</button></div>"
+        game.innerHTML = newHtml;
+    } else {
+        game.innerHTML = "";
+        let newHtml = "";
+        newHtml += "<h1 align='center' id='titlehead'>Game Over!</h1>";
+        newHtml += "<h2 id='player-turn' align='center'> Player " + this.turn + " wins!</h2>";
+        newHtml += "<div class='row'><button class='col-12 reset'>reset</button></div>"
+        game.innerHTML = newHtml;
+    }
+
 }
 
-function ButtonPress(e){
-    if(!win && running) {
-        let target = $(e.target);
-        let returnValue = "";
+TicTacToe.prototype.checkWin = function() {
 
-        if(target.is('#1')) {
-            returnValue = "1";
-        }
-        else if (target.is('#2')) {
-            returnValue = "2";
-        }
-        else if (target.is('#3')) {
-            returnValue = "3";
-        }
-        else if (target.is('#4')) {
-            returnValue = "4";
-        }
-        else if (target.is('#5')) {
-            returnValue = "5";
-        }
-        else if (target.is('#6')) {
-            returnValue = "6";
-        }
-        else if (target.is('#7')) {
-            returnValue = "7";
-        }
-        else if (target.is('#8')) {
-            returnValue = "8";
-        }
-        else if (target.is('#9')) {
-            returnValue = "9";
-        }
-    UpdateBoard(returnValue);
-    }
- }
-
-function UpdateBoard(targetCell) {
-
-    if (myGame.turn === "player1") {
-        switch(targetCell) {
-            case "1":
-                if(myGame.board.row1.cell1 === "") {
-                    myGame.board.row1.cell1 = 'x';
-                    changePlayer = true;
-                }
-            break;
-            case "2":
-                if(myGame.board.row1.cell2 === "") {
-                    myGame.board.row1.cell2 = 'x';
-                    changePlayer = true;
-                }
-                break;
-            case "3":
-                if(myGame.board.row1.cell3 === "") {
-                    myGame.board.row1.cell3 = 'x';
-                    changePlayer = true;
-                }
-                break;
-            case "4":
-                if(myGame.board.row2.cell1 === "") {
-                    myGame.board.row2.cell1 = 'x';
-                    changePlayer = true;
-                }
-                break;
-            case "5":
-                if(myGame.board.row2.cell2 === "") {
-                    myGame.board.row2.cell2 = 'x';
-                    changePlayer = true;
-                }
-                break;
-            case "6":
-                if(myGame.board.row2.cell3 === "") {
-                    myGame.board.row2.cell3 = 'x';
-                    changePlayer = true;
-                }
-                break;
-            case "7":
-                if(myGame.board.row3.cell1 === "") {
-                    myGame.board.row3.cell1 = 'x';
-                    changePlayer = true;
-                } 
-                break;
-            case "8":
-                if(myGame.board.row3.cell2 === "") {
-                    myGame.board.row3.cell2 = 'x';
-                    changePlayer = true;
-                } 
-            break;
-            case "9":
-                if(myGame.board.row3.cell3 === "") {
-                    myGame.board.row3.cell3 = 'x';
-                    changePlayer = true;
-                } 
-            break; 
-            default:
-                console.log("Not applicable.");
-                break;
+    //Check rows
+    for(let i = 0; i < 3; i++) {
+        
+        if(MyGame.board[i][0] != "" && MyGame.board[i][1] != "" && MyGame.board[i][2] != "") {    
+            if(MyGame.board[i][0] === MyGame.board[i][1] && MyGame.board[i][1] === MyGame.board[i][2]) {
+                MyGame.win = true;
+            }
         }
         
-    } 
-    else {
-        switch(targetCell) {
-            case "1":
-                if(myGame.board.row1.cell1 === "") {
-                    myGame.board.row1.cell1 = 'o';
-                    changePlayer = true;
-                }
-                break;
-                case "2":
-                    if(myGame.board.row1.cell2 === "") {
-                    myGame.board.row1.cell2 = 'o'; 
-                    changePlayer = true;
-                }
-                    break;
-                case "3":
-                    if(myGame.board.row1.cell3 === "") {
-                    myGame.board.row1.cell3 = 'o';
-                    changePlayer = true;
-                    }
-                    break;
-                case "4":
-                    if(myGame.board.row2.cell1 === "") {
-                    myGame.board.row2.cell1 = 'o';
-                    changePlayer = true;
-                }
-                    break;
-                case "5":
-                    if(myGame.board.row2.cell2 === "") {
-                    myGame.board.row2.cell2 = 'o';
-                    changePlayer = true;
-                    }
-                    break;
-                case "6":
-                    if(myGame.board.row2.cell3 === "") {
-                        myGame.board.row2.cell3 = 'o';
-                        changePlayer = true;
-                    }
-                    break;
-                case "7":
-                    if(myGame.board.row3.cell1 === "") {
-                        myGame.board.row3.cell1 = 'o';
-                        changePlayer = true;
-                    } 
-                    break;
-                case "8":
-                    if(myGame.board.row3.cell2 === "") {
-                        myGame.board.row3.cell2 = 'o';
-                        changePlayer = true;
-                    } 
-                    break;
-                case "9":
-                    if(myGame.board.row3.cell3 === "") {
-                    myGame.board.row3.cell3 = 'o';
-                    changePlayer = true;
-                    } 
-                    break; 
-                default:
-                    console.log("Not applicable.");
-                    break;
+    }
+
+    //Check columns
+    for(let i = 0; i < 3; i++) {
+
+        if(MyGame.board[0][i] != "" && MyGame.board[1][i] != "" && MyGame.board[2][i] != "")
+        {
+            if(MyGame.board[0][i] === MyGame.board[1][i] && MyGame.board[1][i] === MyGame.board[2][i]) {
+                MyGame.win = true;
+            }
+        }
+        
+    }
+
+    //Check diagonals
+    if(MyGame.board[2][0] != "" && MyGame.board[1][1] != "" && MyGame.board[0][2] != "")
+    {
+        if(MyGame.board[2][0] === MyGame.board[1][1] && MyGame.board[1][1] === MyGame.board[0][2]) {
+            MyGame.win = true;
         }
     }
-    myGame.Render();
+
+    if(MyGame.board[0][0] != "" && MyGame.board[1][1] != "" && MyGame.board[2][2] != "")
+    {
+        if(MyGame.board[0][0] === MyGame.board[1][1] && MyGame.board[1][1] === MyGame.board[2][2]) {
+            MyGame.win = true;
+        }
+    }
+
+    //Turn Change
+    if(MyGame.win === false) {
+        let count = 0;
+        for(let i = 0; i < 3; i++) {
+            
+            for(let k = 0; k < 3; k ++)  {
+
+                if(MyGame.board[i][k] != "") {
+                    count++;
+                }
+
+            }
+
+        }
+
+        if(count === 9) {
+            MyGame.tie = true;
+            MyGame.render();
+            MyGame.resetBoard();
+        }
+            
+        if(MyGame.turn === "x") 
+            MyGame.turn = "o";
+        else 
+            MyGame.turn = "x";
+    }
+
+    if(MyGame.win === true && MyGame.tie === false) {
+        MyGame.render();
+    }
+
 }
+
+TicTacToe.prototype.resetBoard = function(){
+    MyGame.board = [["","",""],["","",""],["","",""]];
+    MyGame.turn = "x";
+    MyGame.win = false;
+
+    MyGame.render();
+}
+
+TicTacToe.prototype.buttonPress = function(e){
+    MyGame.render();
+
+    let clickedId = e.target.className;
+    let rowId, cellId;
+
+    if(!clickedId) { return; }
+    
+
+    if(clickedId === "col-4 tictac") {
+        rowId = e.target.getAttribute("data-row");
+        cellId = e.target.getAttribute("data-cell");
+
+    } else if (clickedId === "col-12 reset") {
+        MyGame.resetBoard();
+    }
+
+    if(MyGame.board[rowId-1][cellId-1] != "") { return; }
+
+    MyGame.board[rowId-1][cellId-1] = MyGame.turn;
+    
+    MyGame.checkWin();
+    MyGame.render();
+}
+
+function UpdateBoard(targetCell) {
+    MyGame.turn = 'player1' ? MyGame.txt = 'x': MyGame.txt = 'o';
+    MyGame.board[targetCell-1] = MyGame.txt;
+
+    MyGame.render();
+}
+
+MyGame = new TicTacToe(".TicTacToe-container");
